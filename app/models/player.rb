@@ -11,9 +11,9 @@ class Player < ApplicationRecord
     end
 
     def unconfirmed_games
-        Game.where(white: self, confirmed: :false)
-            .or(Game.where(black: self))
-            .where.not(added_by: self)
+        games.select do |game|
+            !game.confirmed and game.added_by != self
+        end
     end
 
     private
