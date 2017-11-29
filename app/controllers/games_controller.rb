@@ -2,7 +2,7 @@ class GamesController < ApplicationController
   before_action :set_game, only: [:show, :update, :destroy]
   before_action :authorize
   before_action :authorize_self, only: [:confirm]
-  
+
   # GET /games
   def index
     @games = Game.all
@@ -41,6 +41,10 @@ class GamesController < ApplicationController
     else
       render json: @game.errors, status: :unprocessable_entity
     end
+  end
+
+  def my_games
+    render json: current_user.games, status: 200
   end
 
   # PATCH/PUT /games/1
